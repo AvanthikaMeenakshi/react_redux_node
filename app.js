@@ -4,11 +4,13 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var db = require('./module/postgres').db()
+
+
 var http = require('http');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
+var todo = require('./routes/todo');
 
 var app = express();
 
@@ -24,17 +26,13 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(function(req, res, next) {
-
-	var query = db.query("INSERT into todo_list(todo_name, todo_complete) VALUES('Todo 1', 'false')", function(err, rows){
-		console.log(err)
-		console.log(rows)
-	});
-  	next();
-});
+	
+	
 
 app.use('/', index);
 app.use('/users', users);
+app.use('/todo', todo);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
