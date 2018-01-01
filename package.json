@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node app.js"
+    "start": "concurrently \"node app.js\" \"cd frontend && npm start\""
   },
   "dependencies": {
     "body-parser": "~1.18.2",
